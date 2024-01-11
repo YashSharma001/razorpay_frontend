@@ -8,9 +8,9 @@ const Home = () => {
 
     const checkoutHandler = async (amount) => {
 
-        const { data: { key } } = await axios.get("http://localhost:4000/api/getkey")
+        const { data: { key } } = await axios.get("https://razorpay-backend-edqe.onrender.com/api/getkey")
 
-        const { data: { order } } = await axios.post("http://localhost:4000/api/checkout",
+        const { data: { order } } = await axios.post("https://razorpay-backend-edqe.onrender.com/api/checkout",
             {
                 amount
             })
