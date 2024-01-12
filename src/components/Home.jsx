@@ -8,12 +8,20 @@ const Home = () => {
 
     const checkoutHandler = async (amount) => {
 
-        const { data: { key } } = await axios.get("https://razorpay-backend-edqe.onrender.com/api/getkey")
+        const { data: { key } } = await axios.get("https://razorpay-backend-edqe.onrender.com/api/getkey",
+            {
+                withCredentials: true,
+            })
 
         const { data: { order } } = await axios.post("https://razorpay-backend-edqe.onrender.com/api/checkout",
             {
                 amount
-            })
+            }, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+        })
 
         const options = {
             key: key, // Enter the Key ID generated from the Dashboard
@@ -23,7 +31,7 @@ const Home = () => {
             description: "Razorpay Integration Transaction",
             image: "https://media.licdn.com/dms/image/D4D35AQGZdtHiidAHxQ/profile-framedphoto-shrink_400_400/0/1697340925868?e=1705600800&v=beta&t=d5AU_ik-5bGzISTvB4cMrq9YAxisvU5HUprAwZ8hYmI",
             order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            callback_url: "http://localhost:4000/api/paymentverification",
+            callback_url: "https://razorpay-backend-edqe.onrender.com/api/paymentverification",
             prefill: {
                 "name": "Gaurav Kumar", //logged in user card name and details
                 "email": "gaurav.kumar@example.com",
@@ -38,8 +46,8 @@ const Home = () => {
         };
 
         const razor = new window.Razorpay(options);
-            razor.open();
-           
+        razor.open();
+
 
     }
 
